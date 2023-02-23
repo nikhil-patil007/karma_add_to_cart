@@ -170,8 +170,7 @@
                 }
                 if (data.status == '1'){
                     var url = "{% url 'orderpage' %}";
-                    window.location.href(url);
-
+                    window.location.href = url;
                 }
                 console.log(data)
             }

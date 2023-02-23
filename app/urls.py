@@ -19,4 +19,5 @@ urlpatterns = [
     path("CheckOut/",views.CheckOut,name="CheckOut"),
     path("checkoutpage/",views.checkoutpage,name="checkoutpage"),
     path("orderpage/",views.orderpage,name="orderpage"),    
+    path("Logout/",views.Logout,name="Logout"),    
 ]

@@ -217,7 +217,14 @@ def Login(request):
             return redirect('RegisterPage')
     else:
         return redirect('LoginPage')
-    
+
+def Logout(request):
+    if 'userid' in request.session:
+        del request.session['userid']
+        return redirect('LoginPage')
+    else:
+        return redirect('LoginPage')
+   
 def addtocart(request):
     if request.method == "POST":
         userid = request.session['userid']
@@ -288,7 +295,7 @@ def orderpage(request):
         contax = {
             'title' : 'Karma Shop',
             "brands" : Brand.objects.all(),
-            "order" : order.objects.all(),
+            "order" : order.objects.filter(user_id = userid),
         }
         return render(request, "order.html",contax)
     else:
