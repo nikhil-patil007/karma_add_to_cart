@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" class="no-js">
+{% include 'layouts/head.html' %}
+<body>
+
+    <!-- Start Header Area -->
+	{% include 'layouts/header.html' %}
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Shopping Cart</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="{% url 'index' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="category.html">Cart</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Product</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in carts %}
+                            <tr>
+                                <td>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img src="{{i.product_id.product_image.url}}" height="100px" width="100px" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <p>{{i.product_id.productname}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5>${{i.product_id.product_price}}</h5>
+                                </td>
+                                <td>
+                                    <div class="product_count">
+                                        <input type="number" class="num" gys="{{i.id}}" min="1" max="5" name="qty" id="sst" maxlength="12" value="{{i.qty}}" title="Quantity:"
+                                            class="input-text qty">
+                                        <!-- <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                            class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                            class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button> -->
+                                    </div>
+                                </td>
+                                <td>
+                                    <h5 class="totalprice{{i.id}}">${{i.price}}</h5>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <h5>Subtotal</h5><br>
+                                    <!-- <p>GST 18%</p><br>
+                                    <h5>Grandtotal</h5><br> -->
+                                </td>
+                                <td>
+                                    <h5 class="subprice">${{Subtotal}}</h5><br>
+                                    <!-- <p class="GSTprice">${{GST}}</p><br>
+                                    <h5 class="Grandprice">${{withGST}}</h5><br> -->
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td>
+                                    <h5>Address</h5>
+                                </td>
+                                <td colspan="3">
+                                    {% for j in address %}
+                                        <p><input type="radio" name="addrss" id="{{j.id}}"> {{j.address1}} {{j.address2}} {{j.city}} {{j.state}} {{j.country}} - {{j.zipcode}}</p>
+                                    {% endfor %}
+                                </td>
+                            </tr> -->
+                            <tr class="out_button_area">
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <div class="checkout_btn_inner d-flex align-items-center">
+                                        <a class="gray_btn" href="{% url 'index' %}">Continue Shopping</a>
+                                        <!-- <a class="primary-btn ordercheckout" href="javascript:void(0);">Proceed to checkout</a> -->
+                                        <a class="primary-btn" href="{% url 'checkoutpage' %}">Proceed to checkout</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+
+    <!-- start footer Area -->
+    {% include "layouts/footer.html" %}
+    <!-- End footer Area -->
+</body>
+<script>
+    $('.num').on('input',function(){
+        var id = $(this).attr('gys');
+        var val = $(this).val();
+        mydata = {pid:id,qty:val,'csrfmiddlewaretoken': '{{ csrf_token }}'}
+        mythis = this;
+        $.ajax({
+            url : "{% url 'update_cart' %}",
+            method : "POST",
+            data : mydata,
+            success : function(data){
+                $('.totalprice'+id).html('');
+                $('.totalprice'+id).text('$'+data.update_price);
+
+                $('.subprice').html('');
+                $('.subprice').text('$'+data.subtotal);
+                
+                $('.GSTprice').html('');
+                $('.GSTprice').text('$'+data.GST);
+                
+                $('.Grandprice').html('');
+                $('.Grandprice').text('$'+data.withGST);
+                console.log(data)
+            }
+        });
+    });
+    // Checkout
+    // $('.ordercheckout').on('click',function(){
+    //     var address_id = $('input[name="addrss"]:checked').attr('id');
+    //     mydata = {address_id:address_id,'csrfmiddlewaretoken': '{{ csrf_token }}'}
+    //     $.ajax({
+    //         url : "{% url 'CheckOut' %}",
+    //         method : "POST",
+    //         data : mydata,
+    //         success : function(data){
+    //             console.log(data)
+    //         }
+    //     }); 
+    // });
+</script>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" class="no-js">
+{% include 'layouts/head.html' %}
+<body>
+
+    <!-- Start Header Area -->
+	{% include 'layouts/header.html' %}
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Profile</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="{% url 'index' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="">Address</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <h3>Address</h3>
+                        {% if messages %} 
+                            {% for message in messages %} 
+                                {% if message.tags == 'success' %} 
+                                    <p class="genric-btn success">{{ message }}</p>
+                                {% else %}
+                                    <p class="genric-btn danger">{{ message }}</p>
+                                {% endif %} 
+                            {% endfor %} 
+                        {% endif %}
+                        <form class="row login_form" action="{% url 'add_address' %}" method="post" id="contactForm" novalidate="novalidate">{% csrf_token %}
+                            <div class="col-md-12 form-group">
+                                <label>Address Line 1</label>
+                                <input type="text" class="form-control" id="address1" name="address1" placeholder="Address Line 1">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>Address Line 2</label>
+                                <input type="text" class="form-control" id="address2" name="address2" placeholder="Address Line 2">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>City</label>
+                                <input type="text" class="form-control" id="city" name="city" placeholder="City">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>State</label>
+                                <input type="text" class="form-control" id="State" name="State" placeholder="State">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>zipcode</label>
+                                <input type="text" class="form-control" id="zipcode" name="zipcode" placeholder="zipcode">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>Country</label>
+                                <input type="text" class="form-control" id="country" name="country" placeholder="Country">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <button type="submit" value="submit" class="primary-btn">Submit</button>
+                            </div>
+                        </form>
+                    </table>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+
+    <!-- start footer Area -->
+    {% include "layouts/footer.html" %}
+    <!-- End footer Area -->
+</body>
+</script>
+</html>

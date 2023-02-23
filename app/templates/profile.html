@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx" class="no-js">
+{% include 'layouts/head.html' %}
+<body>
+
+    <!-- Start Header Area -->
+	{% include 'layouts/header.html' %}
+	<!-- End Header Area -->
+
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Profile</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="{% url 'index' %}">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="">Profile</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Cart Area =================-->
+    <section class="cart_area">
+        <div class="container">
+            <div class="cart_inner">
+                <div class="table-responsive">
+                    <table class="table">
+                        <h3>Profile</h3>
+                        {% if messages %} 
+                            {% for message in messages %} 
+                                {% if message.tags == 'success' %} 
+                                    <p class="genric-btn success">{{ message }}</p>
+                                {% else %}
+                                    <p class="genric-btn danger">{{ message }}</p>
+                                {% endif %} 
+                            {% endfor %} 
+                        {% endif %}
+                        <form class="row login_form" action="{% url 'profileupdate' %}" method="post" id="contactForm" novalidate="novalidate">{% csrf_token %}
+                            <div class="col-md-12 form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" id="firstname" name="firstname" value="{% if profile.firstname %}{{profile.firstname}}{% else %}{% endif %} " placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" id="lastname" name="lastname" value="{% if profile.lastname %}{{profile.lastname}}{% else %}{% endif %} " placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" id="email" name="email" value="{% if profile.email %}{{profile.email}}{% else %}{% endif %} " placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'" readonly>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>Contact Number</label>
+                                <input type="text" class="form-control" id="contact_num" name="contact_num" value="{% if profile.number %}{{profile.number}}{% else %}{% endif %} " placeholder="Contact Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label>Alternet Contact Number</label>
+                                <input type="text" class="form-control" id="alt_contact_num" name="alt_contact_num" value="{% if profile.alt_number %}{{profile.alt_number}}{% else %}{% endif %} " placeholder="Alternet Contact Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <button type="submit" value="submit" class="primary-btn">Submit</button>
+                            </div>
+                        </form>
+                    </table>
+                    <hr>
+                    <table>
+                        <div class="col-md-3 form-group">
+                            <a href="{% url 'addaddress' %}" class="primary-btn"><span class="lnr lnr-plus"></span>Add Address</a>
+                        </div>
+                    </table>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Address1</th>
+                                <th>Address2</th>
+                                <th>City</th>
+                                <th>State</th>
+                                <th>Country</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for j in address %}
+                            <tr>
+                                <td>{{j.address1}}</td>
+                                <td>{{j.address2}}</td>
+                                <td>{{j.city}}</td>
+                                <td>{{j.state}}</td>
+                                <td>{{j.country}} - {{j.zipcode}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End Cart Area =================-->
+
+    <!-- start footer Area -->
+    {% include "layouts/footer.html" %}
+    <!-- End footer Area -->
+</body>
+</script>
+</html>

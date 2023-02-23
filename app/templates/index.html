@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+	{% include 'layouts/head.html' %}
+<body>
+		
+	<!-- Start Header Area -->
+		{% include 'layouts/header.html' %}
+	<!-- End Header Area -->
+
+	<!-- start banner Area -->
+	<section class="banner-area">
+		<div class="container">
+			<div class="row fullscreen align-items-center justify-content-start">
+				<div class="col-lg-12">
+					<div class="active-banner-slider owl-carousel">
+						<!-- single-slide -->
+						<div class="row single-slide align-items-center d-flex">
+							<div class="col-lg-5 col-md-6">
+								<div class="banner-content">
+									<h1>Nike New <br>Collection!</h1>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+									<div class="add-bag d-flex align-items-center">
+										<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+										<span class="add-text text-uppercase">Add to Bag</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-7">
+								<div class="banner-img">
+									<img class="img-fluid" src="{% static 'img/banner/banner-img.png' %}" alt="">
+								</div>
+							</div>
+						</div>
+						<!-- single-slide -->
+						<div class="row single-slide">
+							<div class="col-lg-5">
+								<div class="banner-content">
+									<h1>Nike New <br>Collection!</h1>
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
+									<div class="add-bag d-flex align-items-center">
+										<a class="add-btn" href=""><span class="lnr lnr-cross"></span></a>
+										<span class="add-text text-uppercase">Add to Bag</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-7">
+								<div class="banner-img">
+									<img class="img-fluid" src="{% static 'img/banner/banner-img.png' %}" alt="">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- End banner Area -->
+	<!-- start product Area -->
+	<section class="owl-carousel active-product-area section_gap">
+		<!-- single product slide -->
+		<div class="single-product-slider">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-6 text-center">
+						<div class="section-title">
+							<h1>Latest Products</h1>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+								dolore
+								magna aliqua.</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- single product -->
+					{% for i in Product %}
+					<div class="col-lg-3 col-md-6">
+						<div class="single-product">
+							<img class="img-fluid" src="{{i.product_image.url}}" alt="">
+							<div class="product-details">
+								<h6>{{i.productname}}</h6>
+								<div class="price">
+									<h6>${{i.product_price}}</h6>
+									<h6 class="l-through">${{i.product_MRP}}</h6>
+								</div>
+								<div class="prd-bottom">
+									<a href="javascript:void(0);" class="social-info check-blocks" product_id="{{i.id}}">
+										<span class="ti-bag"></span>
+										<p class="hover-text">add to bag</p>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<!-- single product slide -->
+		<div class="single-product-slider">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-6 text-center">
+						<div class="section-title">
+							<h1>Coming Products</h1>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+								dolore
+								magna aliqua.</p>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- single product -->
+					{% for i in Product %}
+					<div class="col-lg-3 col-md-6">
+						<div class="single-product">
+							<img class="img-fluid" src="{{i.product_image.url}}" alt="">
+							<div class="product-details">
+								<h6>{{i.productname}}</h6>
+								<div class="price">
+									<h6>${{i.product_price}}</h6>
+									<h6 class="l-through">${{i.product_MRP}}</h6>
+								</div>
+								<div class="prd-bottom">
+									<a href="javascript:void(0);" class="social-info check-blocks" product_id="{{i.id}}">
+										<span class="ti-bag"></span>
+										<p class="hover-text">add to bag</p>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{% if Product.has_previous %}
+		<a href="?page={{Product.previous_page_number}}" class="genric-btn info circle arrow"><span class="lnr lnr-arrow-left"></span> Previous</a>
+	{% else %}
+		<a href="javascript:void(0);" class="genric-btn info disable circle arrow"><span class="lnr lnr-arrow-left"></span> Previous</a>
+	{% endif %}
+
+	{% if Product.has_next %}
+		<a href="?page={{Product.next_page_number}}" class="genric-btn info circle arrow">Next<span class="lnr lnr-arrow-right"></span></a>
+	{% else %}
+		<a href="javascript:void(0);" class="genric-btn info disable circle arrow">Next<span class="lnr lnr-arrow-right"></span></a>
+	{% endif %}
+	
+	<!-- start footer Area -->
+	{% include 'layouts/footer.html' %}
+	<!-- End footer Area -->
+</body>
+<script>
+	$('.check-blocks').on('click',function(){
+	var id = $(this).attr('product_id');
+	mydata = {pid:id, 'csrfmiddlewaretoken': '{{ csrf_token }}'}
+	mythis = this;
+	$.ajax({
+		url : "{% url 'addtocart' %}",
+		method : "POST",
+		data : mydata,
+		success : function(data){
+			console.log(data)
+		}
+	});
+});
+</script>	
+</html>
